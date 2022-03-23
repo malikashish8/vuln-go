@@ -1,0 +1,31 @@
+services:
+  vuln-go:
+    build: ./
+    environment:
+      - GIN_MODE=release
+      - LISTENER_IP=0.0.0.0
+    ports:
+      - 8080:8080
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: mysql:5
+    restart: always
+    environment:
+      - MYSQL_DATABASE=db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=password
+    ports:
+      - 3306:3306
+    volumes:
+      - ./init.sql:/script/init.sql
+    command: "--init-file /script/init.sql"
+    healthcheck:
+      test: mysqladmin --user=user --password=password ping -h localhost
+      timeout: 20s
+      retries: 4
+  # test:
+  #   image: nicolaka/netshoot
+  #   command: sleep 100h
