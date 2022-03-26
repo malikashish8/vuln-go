@@ -13,18 +13,18 @@ services:
     image: mysql:5
     restart: always
     environment:
-      - MYSQL_DATABASE=db
+      - MYSQL_DATABASE=vulngo
       - MYSQL_USER=user
       - MYSQL_PASSWORD=password
-      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
     ports:
       - 3306:3306
     volumes:
       - ./init.sql:/script/init.sql
     command: "--init-file /script/init.sql"
     healthcheck:
-      test: mysqladmin --user=user --password=password ping -h localhost
-      timeout: 20s
+      test: mysqladmin ping -h localhost
+      timeout: 2s
       retries: 4
   # test:
   #   image: nicolaka/netshoot

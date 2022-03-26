@@ -1,8 +1,8 @@
 -- init db
-CREATE DATABASE db;
-USE db;
-CREATE USER 'user'@'localhost' IDENTIFIED BY 'password';
-GRANT ALL PRIVILEGES ON db.* TO 'user'@'localhost';
+CREATE DATABASE IF NOT EXISTS vulngo;
+USE vulngo;
+CREATE USER IF NOT EXISTS 'user'@'localhost'; -- IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON vulngo.* TO 'user'@'localhost';
 
 -- create
 CREATE TABLE ALBUM (
@@ -10,7 +10,7 @@ CREATE TABLE ALBUM (
   title TEXT NOT NULL,
   artist TEXT NOT NULL,
   price FLOAT NOT NULL
-);
+) AUTO_INCREMENT=1;
 
 -- insert
 INSERT INTO ALBUM(title, artist, price) VALUES("Blue Train", "John Coltrane", 56.99);

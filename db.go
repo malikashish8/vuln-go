@@ -12,7 +12,7 @@ var db *sql.DB
 
 func init() {
 	var err error
-	db, err = sql.Open("mysql", "user:password@tcp(db)/db")
+	db, err = sql.Open("mysql", "user:password@tcp(db)/vulngo")
 
 	if err != nil {
 		panic(err.Error())
@@ -38,11 +38,11 @@ func readAlbumsFromDB() []album {
 func writeAlbumToDB(album album) (status bool) {
 	// vulnerability - sqli
 	query := fmt.Sprintf("INSERT INTO ALBUM(title, artist, price) VALUES('%s','%s',%f)", album.Title, album.Artist, album.Price)
-	print("query = " + query)
+	fmt.Println("query = " + query)
 	_, err := db.Exec(query)
 
 	if err != nil {
-		print(err.Error())
+		fmt.Println(err.Error())
 		return false
 	}
 	return true
@@ -50,17 +50,17 @@ func writeAlbumToDB(album album) (status bool) {
 
 func readByIDFromDB(id string) (album album, err error) {
 	// vulnerability - sqli
-	query := fmt.Sprint("SELECT * from ALBUM WHERE ID = " + id)
+	query := fmt.Sprintf("SELECT * from ALBUM WHERE ID = %v", id)
 	rows, err := db.Query(query)
 
 	if err != nil {
-		print(err.Error())
+		fmt.Println(err.Error())
 		return
 	}
 	defer rows.Close()
 	if !rows.Next() {
 		err = errors.New("no album for this id")
-		print(err.Error())
+		fmt.Println(err.Error())
 		return
 	}
 

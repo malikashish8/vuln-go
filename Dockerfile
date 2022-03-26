@@ -10,8 +10,8 @@ RUN go mod download
 
 COPY *.go ./
 
-RUN go build -o /vuln-go
+RUN go build -o ./vuln-go
 
 EXPOSE 8080
 
-CMD ["/vuln-go"]
+CMD ["./vuln-go"]
