@@ -1,7 +1,7 @@
 -- init db
 CREATE DATABASE IF NOT EXISTS vulngo;
 USE vulngo;
-CREATE USER IF NOT EXISTS 'user'@'localhost'; -- IDENTIFIED BY 'password';
+CREATE USER IF NOT EXISTS 'user'@'localhost';
 GRANT ALL PRIVILEGES ON vulngo.* TO 'user'@'localhost';
 
 -- create

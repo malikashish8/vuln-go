@@ -12,6 +12,7 @@ var db *sql.DB
 
 func init() {
 	var err error
+	// vulnerability - hardcoded secret - db password
 	db, err = sql.Open("mysql", "user:password@tcp(db)/vulngo")
 
 	if err != nil {
@@ -51,6 +52,7 @@ func writeAlbumToDB(album album) (status bool) {
 func readByIDFromDB(id string) (album album, err error) {
 	// vulnerability - sqli
 	query := fmt.Sprintf("SELECT * from ALBUM WHERE ID = %v", id)
+	fmt.Println("query = " + query)
 	rows, err := db.Query(query)
 
 	if err != nil {

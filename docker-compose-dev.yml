@@ -6,7 +6,7 @@ services:
     environment:
       - LISTENER_IP=0.0.0.0
     ports:
-      - 8080:8080
+      - "127.0.0.1:8080:8080"
     volumes:
       - ./:/app
     depends_on:
@@ -14,14 +14,11 @@ services:
         condition: service_healthy
   db:
     image: mysql:5
-    # restart: always
     environment:
       - MYSQL_DATABASE=vulngo
       - MYSQL_USER=user
       - MYSQL_PASSWORD=password
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
-    ports:
-      - 3306:3306
     volumes:
       - ./init.sql:/script/init.sql
     command: "--init-file /script/init.sql"
@@ -29,6 +26,3 @@ services:
       test: mysqladmin ping -h localhost
       timeout: 2s
       retries: 4
-  # test:
-  #   image: nicolaka/netshoot
-  #   command: sleep 100h

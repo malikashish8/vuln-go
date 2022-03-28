@@ -2,10 +2,9 @@ services:
   vuln-go:
     build: ./
     environment:
-      - GIN_MODE=release
-      - LISTENER_IP=0.0.0.0
+      - LISTENER_IP=127.0.0.1
     ports:
-      - 8080:8080
+      - "127.0.0.1:8080:8080"
     depends_on:
       db:
         condition: service_healthy
@@ -17,8 +16,6 @@ services:
       - MYSQL_USER=user
       - MYSQL_PASSWORD=password
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
-    ports:
-      - 3306:3306
     volumes:
       - ./init.sql:/script/init.sql
     command: "--init-file /script/init.sql"
@@ -26,6 +23,3 @@ services:
       test: mysqladmin ping -h localhost
       timeout: 2s
       retries: 4
-  # test:
-  #   image: nicolaka/netshoot
-  #   command: sleep 100h

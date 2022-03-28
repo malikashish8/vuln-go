@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 	"net/http"
-	"os"
 )
 
 var licenseFolder string = "./licenses"
@@ -37,12 +36,6 @@ func main() {
 	mux.HandleFunc("/systemtime", getTime)
 	mux.HandleFunc("/license", getLicenseNames)
 
-	listenerIP, present := os.LookupEnv("LISTENER_IP")
-	serverIP := "127.0.0.1"
-	if present {
-		serverIP = listenerIP
-	}
-	listenAddress := serverIP + ":8080"
-	log.Println("listening on " + listenAddress)
-	http.ListenAndServe(listenAddress, mux)
+	http.ListenAndServe(":8080", mux)
+	log.Println("go listening now")
 }
