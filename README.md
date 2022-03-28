@@ -1,7 +1,7 @@
 # Vuln-go
 
 
-Intentionially vulnerable go (golang) application to test coverage of SAST tools.
+Intentionally vulnerable go (golang) application to test coverage of SAST tools.
 
 All vulnerabilities are marked with `// vulnerability` in code.
 
